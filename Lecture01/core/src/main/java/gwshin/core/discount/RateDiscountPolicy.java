@@ -1,5 +1,6 @@
 package gwshin.core.discount;
 
+import gwshin.core.annotation.MainDiscountPolicy;
 import gwshin.core.member.Grade;
 import gwshin.core.member.Member;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -7,8 +8,9 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
 @Component
+//@Primary
 //@Qualifier("mainDiscountPolicy")
-@Primary
+@MainDiscountPolicy
 public class RateDiscountPolicy implements DiscountPolicy{
 
     private final int discountPercent = 10;
