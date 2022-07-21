@@ -19,9 +19,9 @@ public class AutoAppConfig {
 
     // MemoryMemberRepository의 bean 이름과 중복
     // 수동 빈이 자동 빈을 오버라이딩
-    @Bean(name = "memoryMemberRepository")
-    public MemberRepository memberRepository() {
-        return new MemoryMemberRepository();
-    }
+//    @Bean(name = "memoryMemberRepository")
+//    public MemberRepository memberRepository() {
+//        return new MemoryMemberRepository();
+//    }
 
 }
