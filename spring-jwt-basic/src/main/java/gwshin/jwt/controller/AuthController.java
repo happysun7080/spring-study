@@ -18,6 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
+/**
+ * 로그인 API 추가
+ */
 @RestController
 @RequestMapping("/api")
 public class AuthController {
@@ -36,14 +39,17 @@ public class AuthController {
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword());
 
+        // CustomUserDetailsService의 loadUserByUsername 메소드가 실행됨
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         String jwt = tokenProvider.createToken(authentication);
 
+        // JWT 토큰을 Response Header에 넣어줌
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
 
+        // JWT 토큰을 Response Body에 넣어줌
         return new ResponseEntity<>(new TokenDto(jwt), httpHeaders, HttpStatus.OK);
     }
 }

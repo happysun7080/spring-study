@@ -24,6 +24,9 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    /**
+     * username이 데이터베이스에 존재하지 않으면 데이터베이스에 Autority와 User 정보 생성 및 저장
+     */
     @Transactional
     public UserDto signup(UserDto userDto) {
         if (userRepository.findOneWithAuthoritiesByUsername(userDto.getUsername()).orElse(null) != null) {
@@ -47,7 +50,9 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public UserDto getUserWithAuthorities(String username) {
-        return UserDto.from(userRepository.findOneWithAuthoritiesByUsername(username).orElse(null));
+        return UserDto.from(
+                userRepository.findOneWithAuthoritiesByUsername(username)
+                        .orElse(null));
     }
 
     @Transactional(readOnly = true)

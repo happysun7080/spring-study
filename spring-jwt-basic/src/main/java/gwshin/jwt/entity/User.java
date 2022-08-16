@@ -5,7 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.Set;
 
-@Entity
+@Entity  // 데이터베이스의 테이블과 1대1 매핑되는 객체
 @Table(name = "`user`")
 @Getter
 @Setter
@@ -14,9 +14,9 @@ import java.util.Set;
 @NoArgsConstructor
 public class User {
 
-    @Id
+    @Id  // Primary Key
     @Column(name = "user_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)  // 자동 증가
     private Long userId;
 
     @Column(name = "username", length = 50, unique = true)
@@ -31,6 +31,7 @@ public class User {
     @Column(name = "activated")
     private boolean activated;
 
+    // 다대일, 일대다 관계의 조인 테이블로 정의
     @ManyToMany
     @JoinTable(
             name = "user_authority",

@@ -13,7 +13,7 @@ import javax.validation.constraints.Size;
 public class LoginDto {
 
     @NotNull
-    @Size(min = 3, max = 50)
+    @Size(min = 3, max = 50)    // @Valid 관련 어노테이션
     private String username;
 
     @NotNull

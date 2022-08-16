@@ -6,7 +6,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.DefaultSecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-//@Configuration
+/**
+ * TokenProvider, JwtFilter를 SecurityConfig에 적용할 때 사용
+ */
 public class JwtSecurityConfig extends SecurityConfigurerAdapter<DefaultSecurityFilterChain, HttpSecurity> {
 
     private TokenProvider tokenProvider;
@@ -15,6 +17,9 @@ public class JwtSecurityConfig extends SecurityConfigurerAdapter<DefaultSecurity
         this.tokenProvider = tokenProvider;
     }
 
+    /**
+     * JwtFilter를 통해 Security 로직에 필터 등록
+     */
     @Override
     public void configure(HttpSecurity http) {
         http.addFilterBefore(
