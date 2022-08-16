@@ -1,7 +1,7 @@
 package gwshin.jwt.controller;
 
-import gwshin.dto.LoginDto;
-import gwshin.dto.TokenDto;
+import gwshin.jwt.dto.LoginDto;
+import gwshin.jwt.dto.TokenDto;
 import gwshin.jwt.jwt.JwtFilter;
 import gwshin.jwt.jwt.TokenProvider;
 import org.springframework.http.HttpHeaders;

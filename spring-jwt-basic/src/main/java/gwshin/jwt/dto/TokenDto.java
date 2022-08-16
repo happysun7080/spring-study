@@ -1,4 +1,4 @@
-package gwshin.dto;
+package gwshin.jwt.dto;
 
 import lombok.*;
 
