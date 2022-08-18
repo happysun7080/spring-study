@@ -41,8 +41,8 @@ spring:
               - profile
 
           facebook:
-            client-id: ???
-            client-secret: ???
+#            client-id:
+#            client-secret:
             scope:
               - email
               - public_profile

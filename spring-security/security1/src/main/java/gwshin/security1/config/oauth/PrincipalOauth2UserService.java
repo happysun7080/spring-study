@@ -1,6 +1,9 @@
 package gwshin.security1.config.oauth;
 
 import gwshin.security1.config.authentication.PrincipalDetails;
+import gwshin.security1.config.oauth.provider.FacebookUserInfo;
+import gwshin.security1.config.oauth.provider.GoogleUserInfo;
+import gwshin.security1.config.oauth.provider.OAuth2UserInfo;
 import gwshin.security1.model.User;
 import gwshin.security1.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -33,22 +36,40 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
         log.info("oAuth2User.getAttributes={}", oAuth2User.getAttributes());
 
         User user = addOAuth2User(userRequest, oAuth2User);
+        log.info("user={}", user.toString());
 
         return new PrincipalDetails(user, oAuth2User.getAttributes());
     }
 
     private User addOAuth2User(OAuth2UserRequest userRequest, OAuth2User oAuth2User) {
-        String provider = userRequest.getClientRegistration().getClientId();  // google
-        String providerId = oAuth2User.getAttribute("sub");
+
+        User user = null;
+        if (userRequest.getClientRegistration().getRegistrationId().equals("google")) {
+            log.info("구글 로그인 요청");
+            user = addOAuthUserInfo(new GoogleUserInfo(oAuth2User.getAttributes()));
+        } else if (userRequest.getClientRegistration().getRegistrationId().equals("facebook")) {
+            log.info("페이스북 로그인 요청");
+            user = addOAuthUserInfo(new FacebookUserInfo(oAuth2User.getAttributes()));
+        } else {
+            log.warn("구글 또는 페이스북 로그인만 지원합니다.");
+        }
+
+        return user;
+    }
+
+    private User addOAuthUserInfo(OAuth2UserInfo oAuth2UserInfo) {
+
+        String provider = oAuth2UserInfo.getProvider();
+        String providerId = oAuth2UserInfo.getProviderId();
         String username = provider + "_" + providerId;
         String password = bCryptPasswordEncoder.encode("1234");
-        String email = oAuth2User.getAttribute("email");
+        String email = oAuth2UserInfo.getEmail();
         String role = "ROLE_USER";
 
         User user = userRepository.findByUsername(username);
 
         if (user == null) {
-            log.info("구글 로그인이 최초입니다.");
+            log.info("구글/페이스북 로그인이 최초입니다.");
             user = User.builder()
                     .username(username)
                     .password(password)
