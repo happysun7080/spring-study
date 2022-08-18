@@ -12,12 +12,4 @@ public class Security1Application {
 		SpringApplication.run(Security1Application.class, args);
 	}
 
-	/**
-	 *  password encoder를 bean으로 등록
-	 */
-	@Bean
-	public BCryptPasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
-
 }

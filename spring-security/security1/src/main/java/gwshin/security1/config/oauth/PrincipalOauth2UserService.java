@@ -3,6 +3,7 @@ package gwshin.security1.config.oauth;
 import gwshin.security1.config.authentication.PrincipalDetails;
 import gwshin.security1.config.oauth.provider.FacebookUserInfo;
 import gwshin.security1.config.oauth.provider.GoogleUserInfo;
+import gwshin.security1.config.oauth.provider.NaverUserInfo;
 import gwshin.security1.config.oauth.provider.OAuth2UserInfo;
 import gwshin.security1.model.User;
 import gwshin.security1.repository.UserRepository;
@@ -14,6 +15,8 @@ import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
+
+import java.util.Map;
 
 @Slf4j
 @Service
@@ -50,6 +53,9 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
         } else if (userRequest.getClientRegistration().getRegistrationId().equals("facebook")) {
             log.info("페이스북 로그인 요청");
             user = addOAuthUserInfo(new FacebookUserInfo(oAuth2User.getAttributes()));
+        } else if (userRequest.getClientRegistration().getRegistrationId().equals("naver")) {
+            log.info("네이버 로그인 요청");
+            user = addOAuthUserInfo(new NaverUserInfo((Map<String, Object>) oAuth2User.getAttributes().get("response")));
         } else {
             log.warn("구글 또는 페이스북 로그인만 지원합니다.");
         }
