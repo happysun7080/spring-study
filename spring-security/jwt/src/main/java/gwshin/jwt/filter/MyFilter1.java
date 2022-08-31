@@ -20,12 +20,13 @@ public class MyFilter1 implements Filter {
             String headerAuth = req.getHeader("Authorization");
             log.info("headerAuth={}", headerAuth);
 
-            if (headerAuth.equals("gwshin")) {
-                chain.doFilter(req, res);
-            } else {
-                PrintWriter out = res.getWriter();
-                out.println("인증안됨");
-            }
+//            if (headerAuth.equals("gwshin")) {
+//                chain.doFilter(req, res);
+//            } else {
+//                PrintWriter out = res.getWriter();
+//                out.println("인증안됨");
+//            }
+            chain.doFilter(req, res);
         }
 
     }
